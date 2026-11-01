@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------
+   Portal accent colors (space-separated RGB so Tailwind can apply alpha,
+   e.g. bg-accent/10). Each portal layout sets data-portal on its root
+   wrapper; anything inside inherits that portal's accent.
+   --------------------------------------------------------------------- */
+:root,
+[data-portal="shop"] {
+  --accent: 75 56 105; /* plum  #4B3869 */
+  --accent-light: 108 84 144;
+  --accent-dark: 51 36 72;
+}
+
+[data-portal="seller"] {
+  --accent: 165 87 58; /* clay  #A5573A */
+  --accent-light: 201 126 92;
+  --accent-dark: 122 61 38;
+}
+
+[data-portal="admin"] {
+  --accent: 47 93 98; /* steel #2F5D62 */
+  --accent-light: 79 138 143;
+  --accent-dark: 31 63 67;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-accent/25;
+  }
+
+  *:focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm px-5 py-2.5 text-sm font-medium
+      transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-paper hover:bg-accent-dark;
+  }
+
+  .btn-secondary {
+    @apply btn border border-ink/20 bg-transparent text-ink hover:border-ink/40 hover:bg-ink/5;
+  }
+
+  .btn-danger {
+    @apply btn border border-rust/40 text-rust hover:bg-rust/10;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  .input {
+    @apply w-full rounded-sm border border-line bg-white px-3.5 py-2.5 text-sm text-ink
+      placeholder:text-ink/35 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent;
+  }
+
+  .input-error {
+    @apply border-rust focus:border-rust focus:ring-rust;
+  }
+
+  .field-error {
+    @apply mt-1 text-xs text-rust;
+  }
+
+  .card {
+    @apply rounded-sm border border-line bg-white;
+  }
+
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 text-xs;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-2.5 rounded-sm px-3.5 py-2.5 text-sm text-ink/65 transition-colors hover:bg-ink/5 hover:text-ink;
+  }
+
+  .sidebar-link-active {
+    @apply sidebar-link bg-accent/10 text-accent-dark font-medium hover:bg-accent/10 hover:text-accent-dark;
+  }
+
+  /* Data tables used across the admin panel. */
+  .table-head {
+    @apply border-b border-line bg-paper-dim/60 text-left text-xs uppercase tracking-wide text-ink/50;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-toast-in {
+  animation: toast-in 0.18s ease-out;
+}
